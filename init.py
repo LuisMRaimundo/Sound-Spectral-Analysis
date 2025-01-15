@@ -1,55 +1,85 @@
+# init.py
+
 import logging
 import traceback
-from PyQt5.QtWidgets import QApplication, QMessageBox
-from interface import SpectrumAnalyzer
 import sys
-print(sys.path)
+from typing import NoReturn
+
+from PyQt5.QtWidgets import QApplication, QMessageBox
+
+from interface import SpectrumAnalyzer
 
 
+def show_critical_error(error_msg: str, error_trace: str) -> None:
+    """
+    Display a critical error message dialog to the user.
 
-def main():
+    Args:
+        error_msg (str): The main error message to display.
+        error_trace (str): Detailed traceback for the error.
+    """
+    app = QApplication(sys.argv)  # Only create a QApplication in this fallback scenario
+    msg = QMessageBox()
+    msg.setIcon(QMessageBox.Critical)
+    msg.setWindowTitle("Critical Error")
+    msg.setText(error_msg)
+    msg.setInformativeText("Check the logs for more details.")
+    msg.setDetailedText(error_trace)
+    msg.exec_()
+
+
+def run_application() -> int:
     """
     Initializes and runs the spectral analysis application.
 
-    This function sets up the PyQt5 application environment, initializes the 
-    SpectrumAnalyzer graphical interface, and starts the event loop. If an error 
-    occurs during initialization, it logs the error and displays a critical error 
-    message to the user.
+    This function sets up the PyQt5 application environment, initializes the
+    SpectrumAnalyzer graphical interface, and starts the event loop. If an error
+    occurs during initialization, it logs the error and displays a critical
+    error message to the user.
 
-    Exceptions:
-        If an exception is raised during the application startup, it is logged,
-        and a QMessageBox displays the error details.
-
-    Usage:
-        Run this script as the main entry point to start the application.
-
-    Example:
-        python init.py
+    Returns:
+        int: The return code from the Qt event loop.
     """
     app = QApplication(sys.argv)
     analyzer = SpectrumAnalyzer()
     analyzer.show()
-    sys.exit(app.exec_())
+    return app.exec_()
 
-if __name__ == '__main__':
+
+def main() -> NoReturn:
+    """
+    Main entry point for the spectral analysis application.
+
+    This function configures logging, executes the core application logic,
+    and handles any top-level exceptions.
+    """
+    # Configure logging
     logging.basicConfig(
         level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s'
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        # filename='application.log',  # Uncomment to log to a file
+        # filemode='a'
     )
+
+    logging.info("Initializing the application...")
+
     try:
-        logging.info("Initializing the application...")
-        main()
+        exit_code = run_application()
         logging.info("Interface successfully initialized.")
-    except Exception as e:
-        logging.error(f"An error occurred while starting the application: {e}")
+        sys.exit(exit_code)
+    except Exception as exc:
+        err_message = f"An error occurred while starting the application: {exc}"
+        logging.error(err_message)
         logging.error(traceback.format_exc())
+
         # Display an error message to the user
-        app = QApplication(sys.argv)  # Ensure QApplication is instantiated before creating QMessageBox
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setWindowTitle("Critical Error")
-        msg.setText("An error occurred while starting the application.")
-        msg.setInformativeText("Check the logs for more details.")
-        msg.setDetailedText(traceback.format_exc())
-        msg.exec_()
+        show_critical_error(
+            "An error occurred while starting the application.",
+            traceback.format_exc()
+        )
         sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
+
