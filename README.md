@@ -98,7 +98,7 @@ python init.py
 - spectral_power.py
 
 **Autonomous/Complementary Modules:**
-- cutfade.py
+- cutfade.py (requires pydub)
 - comcreate.py
 
 ---
@@ -112,8 +112,11 @@ python init.py
 - scipy
 - matplotlib
 - pandas
-- librosa
+- librosa (requires FFmpeg for audio file support)
 - PyQt5
+- plotly
+- soundfile
+- xlsxwriter 
 (Dependencies are automatically installed when you run the pip install ... command above.)
 
 
