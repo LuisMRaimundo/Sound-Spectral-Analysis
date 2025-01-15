@@ -1,4 +1,4 @@
-# Spectral Sound Analysis
+# Sound Spectral Analysis
 Copyright (c) 2024, Luís Miguel da Luz Raimundo
 
 ---
