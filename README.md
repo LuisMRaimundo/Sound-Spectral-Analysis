@@ -77,7 +77,7 @@ venv\Scripts\activate
 
 **3.** Install Dependencies
 ```bash 
-pip install numpy scipy matplotlib pandas librosa PyQt5
+pip install numpy scipy matplotlib pandas librosa PyQt5 plotly soundfile xlsxwriter
 ```
 
 **4.** run the project
