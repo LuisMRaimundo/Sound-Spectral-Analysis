@@ -163,7 +163,6 @@ This software was developed by Luís Raimundo, as part of a broader study on Mus
 and was funded by:
 
 **Foundation for Science and Technology (FCT)** - Portugal
-![2022_FCT_Logo_A_horizontal_branco](https://github.com/user-attachments/assets/76c06c3b-8661-4d0d-b2a7-8e58c37d376b)
 
 
 And also supported by:
