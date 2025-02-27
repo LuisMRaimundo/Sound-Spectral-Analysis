@@ -1,0 +1,9 @@
+numpy
+scipy
+matplotlib
+pandas
+librosa
+PyQt5
+plotly
+soundfile
+xlsxwriter 
